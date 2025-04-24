@@ -4,9 +4,9 @@
  */
 package LogicaCarga;
 
-import ObjetosProyecto.*;
 import EstructurasDeDatos.*;
 import LogicaCarga.ZonasEnvio.Zona;
+import ObjetosProyecto.*;
 import java.util.Scanner;
 
 /**
@@ -36,24 +36,24 @@ public class SistemaEnvios {
     private int contadorCajas;
     
     public SistemaEnvios() {
-        // Inicializar estructuras
+        
         colaCajas = new Cola<>(50);
         
-        // Crear almacenes por zona
+        
         almacenNorte = new Almacen(Zona.NORTE);
         almacenSur = new Almacen(Zona.SUR);
         almacenEste = new Almacen(Zona.ESTE);
         almacenOeste = new Almacen(Zona.OESTE);
         almacenCentro = new Almacen(Zona.CENTRO);
         
-        // Crear camiones por zona
+        
         camionNorte = new Camion(Zona.NORTE);
         camionSur = new Camion(Zona.SUR);
         camionEste = new Camion(Zona.ESTE);
         camionOeste = new Camion(Zona.OESTE);
         camionCentro = new Camion(Zona.CENTRO);
         
-        // Inicializar estadísticas
+        
         estadisticasNorte = new EstadisticasZona(Zona.NORTE);
         estadisticasSur = new EstadisticasZona(Zona.SUR);
         estadisticasEste = new EstadisticasZona(Zona.ESTE);
@@ -84,7 +84,7 @@ public class SistemaEnvios {
         System.out.println("\n=== CAJAS EN COLA DE RECEPCIÓN ===");
         int contador = 1;
         
-        // Crear una cola temporal para no perder los elementos
+        
         Cola<Caja> colaTemp = new Cola<>(colaCajas.tamano());
         
         while (!colaCajas.estaVacia()) {
@@ -97,7 +97,7 @@ public class SistemaEnvios {
             contador++;
         }
         
-        // Restaurar la cola original
+        
         while (!colaTemp.estaVacia()) {
             colaCajas.encolar(colaTemp.desencolar());
         }
@@ -119,7 +119,7 @@ public class SistemaEnvios {
             GuiaDeEnvio guia = caja.getGuia();
             String direccion = guia.getDireccionDestino().toUpperCase();
             
-            // Determinar la zona basada en la dirección de destino
+            
             if (direccion.contains("NORTE")) {
                 almacenNorte.agregarCaja(caja);
             } else if (direccion.contains("SUR")) {
@@ -192,28 +192,28 @@ public class SistemaEnvios {
             return;
         }
         
-        // Ordenar las cajas por distancia primero
+        
         almacen.ordenarPorDistancia();
         
-        // Crear una lista temporal para almacenar las cajas que no se pudieron cargar
+        
         Lista<Caja> cajasNoCargadas = new Lista<>(10);
         int cargadas = 0;
         
-        // Cargar cajas desde el almacén al camión
+        
         while (!almacen.estaVacio()) {
             Caja caja = almacen.getCajas().obtenerDe(0);
             almacen.getCajas().eliminarDe(0);
             
-            // Intentar cargar la caja en el camión
+            
             if (camion.cargarCaja(caja)) {
                 cargadas++;
             } else {
-                // Si no se puede cargar, guardar en la lista temporal
+                
                 cajasNoCargadas.agregarAlFinal(caja);
             }
         }
         
-        // Devolver al almacén las cajas que no se pudieron cargar
+        
         while (!cajasNoCargadas.estaVacia()) {
             almacen.agregarCaja(cajasNoCargadas.obtenerDe(0));
             cajasNoCargadas.eliminarDe(0);
@@ -238,7 +238,7 @@ public class SistemaEnvios {
         System.out.println("Carga actual: " + String.format("%.2f", camion.getPesoActual()) + 
                 " kg (" + String.format("%.2f", camion.getPorcentajeCarga()) + "% de capacidad)");
         
-        // Para mostrar las cajas necesitamos crear una pila temporal
+        
         Pila<Caja> pilaTemp = new Pila<>(camion.numeroCajas());
         int contador = 1;
         
@@ -253,7 +253,7 @@ public class SistemaEnvios {
             contador++;
         }
         
-        // Restaurar la pila original
+        
         while (!pilaTemp.isEmpty()) {
             camion.getCajas().push(pilaTemp.pop());
         }
@@ -280,20 +280,20 @@ public class SistemaEnvios {
             return;
         }
         
-        // Despachar el camión y obtener las cajas entregadas
+        
         Lista<Caja> cajasEntregadas = camion.despachar();
         
         System.out.println("\n=== ORDEN DE ENTREGA DE CAJAS DEL CAMIÓN " + zona.getNombre().toUpperCase() + " ===");
         int contador = 1;
         
-        // Las cajas se entregan desde la de menor distancia a la de mayor distancia
+        
         for (Caja caja : cajasEntregadas) {
             System.out.println(contador + ". ID: " + caja.getGuia().getIdCaja() +
                     ", Cliente: " + caja.getGuia().getCliente().getNombre() +
                     ", Destino: " + caja.getGuia().getDireccionDestino() +
                     ", Distancia: " + caja.getGuia().getDistanciaEnvio() + " km");
             
-            // Registrar la entrega en las estadísticas
+            
             estadisticas.registrarEntrega(caja);
             contador++;
         }
@@ -330,7 +330,7 @@ public class SistemaEnvios {
         System.out.print("Dirección: ");
         String direccion = scanner.nextLine();
         
-        // Generar un ID único para el cliente
+        
         String idCliente = "CLI" + System.currentTimeMillis();
         
         return new Cliente(idCliente, nombre, telefono, email, direccion);
@@ -358,10 +358,10 @@ public class SistemaEnvios {
         System.out.print("Peso de la caja (kg): ");
         peso = Double.parseDouble(scanner.nextLine());
         
-        // Seleccionar zona de destino
+        
         Zona zonaDestino = seleccionarZona(scanner);
         
-        // Crear dirección de destino basada en la zona
+        
         System.out.print("Ciudad de destino: ");
         String ciudad = scanner.nextLine();
         
@@ -370,14 +370,14 @@ public class SistemaEnvios {
         System.out.print("Distancia de envío (km): ");
         distancia = Double.parseDouble(scanner.nextLine());
         
-        // Generar ID único para la caja
+        
         String idCaja = "CAJA" + (++contadorCajas);
         
-        // Crear la guía de envío
+        
         double pesoFacturado = Math.max(peso, (alto * ancho * largo) / 5000.0);
         GuiaDeEnvio guia = new GuiaDeEnvio(idCaja, cliente, direccionDestino, distancia, pesoFacturado);
         
-        // Crear la caja con la guía
+        
         return new Caja(alto, ancho, largo, peso, guia);
     }
     

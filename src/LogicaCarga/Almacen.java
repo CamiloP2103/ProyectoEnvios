@@ -49,11 +49,11 @@ public class Almacen {
                 }
             }
             
-            // Intercambiar cajas si se encontró una con menor distancia
+            
             if (indiceMenor != i) {
                 Caja temp = cajas.obtenerDe(i);
                 
-                // Eliminar y reinsertar para hacer el intercambio
+                
                 cajas.eliminarDe(i);
                 cajas.insertarEn(i, cajas.obtenerDe(indiceMenor - 1));
                 

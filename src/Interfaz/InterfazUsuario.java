@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Interfaz;
 
@@ -102,13 +102,13 @@ public class InterfazUsuario {
      * Registra una nueva caja en el sistema
      */
     private void registrarNuevaCaja() {
-        // Crear cliente para la caja
+        
         Cliente cliente = sistema.crearCliente(scanner);
         
-        // Crear la caja con su guía de envío
+        
         Caja caja = sistema.crearCaja(cliente, scanner);
         
-        // Encolar la caja en el sistema
+        
         sistema.recibirCaja(caja);
     }
     

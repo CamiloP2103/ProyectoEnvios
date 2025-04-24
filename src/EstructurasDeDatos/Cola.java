@@ -22,11 +22,11 @@ import java.util.Iterator;
  * @author juane
  */
 public class Cola<Item> implements Iterable<Item> {
-    private Item[] elementos;   // Arreglo para almacenar los elementos
-    private int frente;            // Índice del primer elemento
-    private int finalCola;         // Índice del último elemento
-    private int cantidad;          // Número de elementos en la cola
-    private int capacidad;         // Capacidad actual del arreglo
+    private Item[] elementos;   
+    private int frente;         
+    private int finalCola;      
+    private int cantidad;       
+    private int capacidad;      
 
     /**
      * Constructor que inicializa la cola con una capacidad dada.
@@ -49,7 +49,7 @@ public class Cola<Item> implements Iterable<Item> {
     private void redimensionar(int nuevaCapacidad) {
         Item[] temporal = (Item[]) new Object[nuevaCapacidad];
         
-        // Copia los elementos manteniendo el orden FIFO
+        
         for (int i = 0; i < cantidad; i++) {
             temporal[i] = elementos[(frente + i) % capacidad];
         }
@@ -68,10 +68,10 @@ public class Cola<Item> implements Iterable<Item> {
      */
     public void encolar(Item elemento) {
         if (cantidad == capacidad) {
-            redimensionar(2 * capacidad); // Duplica la capacidad si es necesario
+            redimensionar(2 * capacidad); 
         }
         
-        finalCola = (finalCola + 1) % capacidad; // Avanza finalCola circularmente
+        finalCola = (finalCola + 1) % capacidad; 
         elementos[finalCola] = elemento;
         cantidad++;
     }
@@ -88,11 +88,11 @@ public class Cola<Item> implements Iterable<Item> {
         }
         
         Item elemento = elementos[frente];
-        elementos[frente] = null; // Evita el desperdicio de memoria
-        frente = (frente + 1) % capacidad; // Avanza frente circularmente
+        elementos[frente] = null; 
+        frente = (frente + 1) % capacidad; 
         cantidad--;
         
-        // Reduce el tamaño a la mitad si es muy grande y contiene pocos elementos
+        
         if (cantidad > 0 && cantidad == capacidad / 4) {
             redimensionar(capacidad / 2);
         }
@@ -131,7 +131,7 @@ public class Cola<Item> implements Iterable<Item> {
         return cantidad;
     }
     
-     /**
+    /**
      * Devuelve la capacidad actual de la Lista.
      *
      * @return Capacidad actual del arreglo interno
@@ -154,7 +154,7 @@ public class Cola<Item> implements Iterable<Item> {
      * Clase interna que implementa Iterador para recorrer la cola.
      */
     private class IteradorCola implements Iterator<Item> {
-        private int actual = 0; // Comenzamos en el frente de la cola
+        private int actual = 0; 
 
         @Override
         public boolean hasNext() {
@@ -166,7 +166,7 @@ public class Cola<Item> implements Iterable<Item> {
             if (!hasNext()) {
                 System.out.println("No hay mas elementos en la cola.");
             }
-            // Obtiene el elemento actual (considerando la estructura circular)
+            
             Item elemento = elementos[(frente + actual) % capacidad];
             actual++;
             return elemento;

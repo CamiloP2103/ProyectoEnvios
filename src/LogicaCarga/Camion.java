@@ -18,10 +18,10 @@ public class Camion {
     
     private Zona zona;
     private EstructurasDeDatos.Pila<Caja> cargaCajas;
-    private final double alturaCamion = 250;  // cm
-    private final double anchoCamion = 200;   // cm
-    private final double largoCamion = 400;   // cm
-    private final double pesoMaximo = 4000;   // kg
+    private final double alturaCamion = 250;  
+    private final double anchoCamion = 200;   
+    private final double largoCamion = 400;   
+    private final double pesoMaximo = 4000;   
     private double pesoActual;
     
     public Camion(Zona zona) {
@@ -36,14 +36,14 @@ public class Camion {
      * @return true si la caja se cargó exitosamente, false si no hay espacio
      */
     public boolean cargarCaja(Caja caja) {
-        // Verificar si la caja cabe físicamente en el camión
+        
         if (caja.getAltoCaja() > alturaCamion || 
             caja.getAnchoCaja() > anchoCamion || 
             caja.getLargoCaja() > largoCamion) {
             return false;
         }
         
-        // Verificar si el peso no excede el límite
+        
         if (pesoActual + caja.getPesoCaja() > pesoMaximo) {
             return false;
         }

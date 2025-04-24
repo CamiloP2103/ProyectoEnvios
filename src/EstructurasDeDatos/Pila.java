@@ -18,8 +18,8 @@ import java.util.Iterator;
  */
 
 public class Pila<Item> implements Iterable <Item> {
-    private Item a[];// Arreglo para almacenar los elementos de la pila
-    private int count;// Número de elementos en la pila
+    private Item a[];
+    private int count;
     
     /**
      * Constructor que inicializa la pila con una capacidad dada.
@@ -42,10 +42,10 @@ public class Pila<Item> implements Iterable <Item> {
         for (int i = 0; i < count; i++) {
             temp[i] = a[i];
         }
-        a = temp; // Actualizar la referencia del arreglo
+        a = temp; 
     }
     
-     /**
+    /**
      * Agrega un elemento a la pila.
      * Si la pila está llena, su tamaño se duplica automáticamente.
      *
@@ -53,7 +53,7 @@ public class Pila<Item> implements Iterable <Item> {
      */
     public void push(Item item) {
         if (count == a.length) {
-            resize(2 * a.length); // Duplica la capacidad si es necesario
+            resize(2 * a.length); 
         }
         a[count++] = item;
     }
@@ -67,12 +67,12 @@ public class Pila<Item> implements Iterable <Item> {
     public Item pop() {
         if (isEmpty()) {
             System.out.println("Advertencia: La pila esta vacia.");
-            return null; // Devuelve null si la pila esta vacia
+            return null; 
         }
         Item item = a[--count];
-        a[count] = null; // Evita el desperdicio de memoria
+        a[count] = null; 
         
-        // Reduce el tamaño a la mitad si es muy grande y contiene pocos elementos
+        
         if (count > 0 && count == a.length / 4) {
             resize(a.length / 2);
         }
@@ -88,7 +88,7 @@ public class Pila<Item> implements Iterable <Item> {
     public Item peek() {
         if (isEmpty()) {
             System.out.println("Advertencia: La pila esta vacia.");
-            return null; // Devuelve null si la pila esta vacia
+            return null; 
         }
         return a[count - 1];
     }
@@ -164,11 +164,11 @@ public class Pila<Item> implements Iterable <Item> {
      * Clase interna que implementa Iterator para recorrer la pila.
      */
     private class StackIterator implements Iterator<Item> {
-        private int current = count - 1; // Comenzamos en la cima de la pila
+        private int current = count - 1; 
 
         @Override
         public boolean hasNext() {
-            return current >= 0; // Mientras haya elementos en la pila
+            return current >= 0; 
         }
 
         @Override
@@ -176,7 +176,7 @@ public class Pila<Item> implements Iterable <Item> {
             if (!hasNext()) {
                 System.out.println("No hay más elementos en la pila.");
             }
-            return a[current--]; // Retorna el elemento y disminuye el índice
+            return a[current--]; 
         }
     
     }
